@@ -95,6 +95,8 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
+          // HACK: Override the cursor with the one that has the hotspot updated
+          canvas.style.cursor = `url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAABImlDQ1BJQ0MgcHJvZmlsZQAAKJGdkLFKw1AUhr9UUZE6qR2kQwbXgoudXKpCECzEWMHqlN60WExiSFKKb+Cb6MN0EARfwV3B2f9GBwezeOHwfxzO+f97LzTc2CTF8h4kaZl7QW94ObxyV99osE2TNq3QFFnP90+pPZ+vOFZfOtarfu7PsxKNCyNdqFKT5SU4B+LuvMwsq9i6HQRH4gexGyVpJH4S70ZJZNnuBkk8Mz+e9jbNcXpxbvuqNh4n9PFxGTFjSkxJR5qqc0yXfalHTsg9BUYaM1ZvrpmSG1EhJ49D0UCk29Tk7VR5vlJG8pjKyybckcjT5mH/93vt46zadFqLLMzDqrWkakwm8P4IG0PYfIb165qstd9vq5npVjP/fOMX1tFQXADFS60AAAACYktHRAD/h4/MvwAAAYtJREFUSMftlD1rk2EUhu+8+TJQCI0YEKGlxqFkyCASi0VxMYMlRcQtg5JFKLR26F9QC46CQpUUCZQiuggOElA7hX4M2pYSqDiIQYIo2hiaYJKrS2JDm2ied3LIubfzwMU557nPEWlu4kd2ZanOQz3TZXlkL0h+qs9T2OEJZ+xUICLfC+c4yyKlPHcYMgf08XYKcYSrLFHbZIKAGUDcfYoLIY4yyVaVN1zBawKIb5cH/mROMsuXXywwgqNbwODuh7GWnIMoaYoF7nGqO4Cb57cP5L3EyVDOcYtj/waI6df0HXoLkeI3ZBnH2RngkiSthH8O+TcazvBpQKc1qiihr86cllWSpVpnIwkRqK3daCDDvOBzsbpOiiSRNoW1bUE8eIQD4eYxZLhIEKv7bxQi8b4aRFzixzcumBpJiOGd/Hl8vIT7fxtZZ4CPVzMkqHwkbLYLrsYsd5W9FvPhmdOW6To3FatXWOW4+TY2dYJ3XLdzD5rykKDfHOBgvxtLdfOL1gqwFZZ6gB7gfwDsAW+UZNoTKiw0AAAAAElFTkSuQmCC"),default`
           loadingBar.style.display = "none";
         }).catch((message) => {
           alert(message);
