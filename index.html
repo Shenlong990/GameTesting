@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Beramonium GemHunters</title>
+    <title>Unity WebGL Player | BeraTrain Prototype</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
+      <canvas id="unity-canvas" width=1690 height=900></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -17,12 +17,18 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">BeraTrain Prototype</div>
+      </div>
     </div>
     <script>
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
       var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var warningBanner = document.querySelector("#unity-warning");
 
       // Shows a temporary message banner/ribbon for a few seconds, or
@@ -50,19 +56,19 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/DemoBuild.loader.js";
+      var loaderUrl = buildUrl + "/Build.loader.js";
       var config = {
-        dataUrl: buildUrl + "/DemoBuild.data.unityweb",
-        frameworkUrl: buildUrl + "/DemoBuild.framework.js.unityweb",
-        codeUrl: buildUrl + "/DemoBuild.wasm.unityweb",
+        dataUrl: buildUrl + "/Build.data.gz",
+        frameworkUrl: buildUrl + "/Build.framework.js.gz",
+        codeUrl: buildUrl + "/Build.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "BadlandsTechnology",
-        productName: "Beramonium GemHunters",
-        productVersion: "1.0",
+        companyName: "DefaultCompany",
+        productName: "BeraTrain Prototype",
+        productVersion: "4.0.1",
         showBanner: unityShowBanner,
       };
 
-      // By default Unity keeps WebGL canvas render target size matched with
+      // By default, Unity keeps WebGL canvas render target size matched with
       // the DOM size of the canvas element (scaled by window.devicePixelRatio)
       // Set this to false if you want to decouple this synchronization from
       // happening inside the engine, and you would instead like to size up
@@ -71,6 +77,7 @@
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
+
         var meta = document.createElement('meta');
         meta.name = 'viewport';
         meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
@@ -81,15 +88,15 @@
         // To lower canvas resolution on mobile devices to gain some
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
+
         unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
-        // Maintain a 16:9 aspect ratio that the game was designed with
-        canvas.style.width="min(100vw, 177.777777vh)";
-        canvas.style.height="min(100vh, 56.25vw)";
-        // Center the content and add black bars
-        container.style.display = "flex";
-        canvas.style.margin = "auto";
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
+
+        canvas.style.width = "1690px";
+        canvas.style.height = "900px";
       }
+
       loadingBar.style.display = "block";
 
       var script = document.createElement("script");
@@ -99,6 +106,9 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
         }).catch((message) => {
           alert(message);
         });
